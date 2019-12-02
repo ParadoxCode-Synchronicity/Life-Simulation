@@ -6,6 +6,7 @@ using namespace std;
 class species {
 public:
     int vision ,stamina,a1=10,food;
+    string status ;
     pair<int,int> coord ;
     species()
     {
@@ -13,6 +14,7 @@ public:
         stamina = 50;
         coord = make_pair(0,0);
         food = 0;
+        status = "ALIVE" ;
     }
     species(int v , int s)
     {
@@ -23,7 +25,7 @@ public:
 };
 
 list <species> skills;
-int t=50,x,a,y,c=1;
+int t=50,x,a,y,c=1,flag=0;
 
 class environment {
     int population=10,food=400,size=100;
@@ -98,83 +100,90 @@ void environment::day()
     {
         for(list<species>::iterator i = skills.begin();i!=skills.end();i++)
         {
-            x = ((*i).coord).first ;
-            y = ((*i).coord).second ;
-            //cout << x << " " << y << " " ;
+            if((*i).status=="DEAD")
+                continue;
+            //cout << endl ;
+            x = ((*i).coord).first-1 ;
+            y = ((*i).coord).second-1 ;
+            //cout << ((*i).coord).first << " " << ((*i).coord).second << " " ;
             while(true)
             {
-            a  = rand()%8 + 1 ;
-            if(a!=(*i).a1)
+            flag=0;
+            a  = rand()%7;
+            if((a+4)%8!=(*i).a1)
             {
             switch(a)
             {
             case 1 :
-                if(--y>0)
+                if(y>0)
                 {
-                    (*i).a1=a;
+                    flag = 1;
                     --((*i).coord).second;
                 }
                 break;
             case 2 :
-                if(--y>0&&++x<size+1)
+                if(y>0&&x<size+1)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     ++((*i).coord).first;
                     --((*i).coord).second;
                 }
                 break;
             case 3 :
-                if(++x<size+1)
+                if(x<size+1)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     ++((*i).coord).first;
                 }
                 break ;
             case 4 :
                 if(++x<size+1&&++y<size+1)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     ++((*i).coord).first;
                     ++((*i).coord).second;
                 }
                 break;
             case 5:
-                if(++y<size+1)
+                if(y<size+1)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     ++((*i).coord).second;
                 }
                 break;
             case 6 :
-                if(++y<size+1&&--x>0)
+                if(y<size+1&&x>0)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     --((*i).coord).first;
                     ++((*i).coord).second;
                 }
                 break;
             case 7 :
-                if(--x>0)
+                if(x>0)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     --((*i).coord).first;
                 }
                 break;
-            case 8 :
-                if(--y>0&&--x>0)
+            case 0 :
+                if(y>0&&x>0)
                 {
-                    (*i).a1=a;
+                    flag=1;
                     --((*i).coord).first;
                     --((*i).coord).second;
                 }
                 break;
             }
-            if(a==(*i).a1)
-                break;
+            if(flag==1)
+                {
+                    (a+4)%8==(*i).a1;
+                    break;
+                }
             }
             }
-            //cout << t;
-        if(location[x][y]==1)
+        //cout << ((*i).coord).first<< " " << ((*i).coord).second  << " ";
+        if(location[((*i).coord).first][((*i).coord).second ]==1)
         {
             ++(*i).food ;
             //cout << c++;
@@ -182,11 +191,10 @@ void environment::day()
             location[x][y]=0;
         }
         --(*i).stamina ;
-        //if((*i).stamina == 0 && (*i).food == 0)
-        //{
-            //skills.erase(i);
-            //i--;
-        // }
+        if((*i).stamina == 0 && (*i).food == 0)
+        {
+            (*i).status = "DEAD";
+        }
         }
     }
     for(list<species>::iterator i = skills.begin();i!=skills.end();i++)
@@ -197,5 +205,6 @@ int main()
 {
     environment obj1 ;
     srand(time(NULL));
+    cout << "\nDolesh 1901CS20\nRishav 1901CS46" ;
     return 0 ;
 }
