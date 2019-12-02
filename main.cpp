@@ -103,8 +103,8 @@ void environment::day()
             if((*i).status=="DEAD")
                 continue;
             //cout << endl ;
-            x = ((*i).coord).first-1 ;
-            y = ((*i).coord).second-1 ;
+            x = ((*i).coord).first;
+            y = ((*i).coord).second;
             //cout << ((*i).coord).first << " " << ((*i).coord).second << " " ;
             while(true)
             {
@@ -115,14 +115,14 @@ void environment::day()
             switch(a)
             {
             case 1 :
-                if(y>0)
+                if(--y>0)
                 {
                     flag = 1;
                     --((*i).coord).second;
                 }
                 break;
             case 2 :
-                if(y>0&&x<size+1)
+                if(--y>0&&++x<size+1)
                 {
                     flag=1;
                     ++((*i).coord).first;
@@ -130,7 +130,7 @@ void environment::day()
                 }
                 break;
             case 3 :
-                if(x<size+1)
+                if(++x<size+1)
                 {
                     flag=1;
                     ++((*i).coord).first;
@@ -145,14 +145,14 @@ void environment::day()
                 }
                 break;
             case 5:
-                if(y<size+1)
+                if(++y<size+1)
                 {
                     flag=1;
                     ++((*i).coord).second;
                 }
                 break;
             case 6 :
-                if(y<size+1&&x>0)
+                if(++y<size+1&&--x>0)
                 {
                     flag=1;
                     --((*i).coord).first;
@@ -160,14 +160,14 @@ void environment::day()
                 }
                 break;
             case 7 :
-                if(x>0)
+                if(--x>0)
                 {
                     flag=1;
                     --((*i).coord).first;
                 }
                 break;
             case 0 :
-                if(y>0&&x>0)
+                if(--y>0&&--x>0)
                 {
                     flag=1;
                     --((*i).coord).first;
@@ -183,12 +183,12 @@ void environment::day()
             }
             }
         //cout << ((*i).coord).first<< " " << ((*i).coord).second  << " ";
-        if(location[((*i).coord).first][((*i).coord).second ]==1)
+        if(location[((*i).coord).first][((*i).coord).second]==1)
         {
             ++(*i).food ;
             //cout << c++;
             //cout << ++(*i).food << endl;
-            location[x][y]=0;
+            location[((*i).coord).first][((*i).coord).second]=0;
         }
         --(*i).stamina ;
         if((*i).stamina == 0 && (*i).food == 0)
