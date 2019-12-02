@@ -26,7 +26,7 @@ list <species> skills;
 int t=50,x,a,y,c=1;
 
 class environment {
-    int population=10,food=400,size=100;
+    int population=1,food=400,size=100;
     int location[102][102];
 
 public :
@@ -98,27 +98,28 @@ void environment::day()
     {
         for(list<species>::iterator i = skills.begin();i!=skills.end();i++)
         {
+            cout << endl ;
             x = ((*i).coord).first ;
             y = ((*i).coord).second ;
-            //cout << x << " " << y << " " ;
+            cout << x << " " << y << " " ;
             while(true)
             {
-            a  = rand()%8 + 1 ;
-            if(a!=(*i).a1)
+            a  = rand()%7;
+            if((a+4)%8!=(*i).a1)
             {
             switch(a)
             {
             case 1 :
                 if(--y>0)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     --((*i).coord).second;
                 }
                 break;
             case 2 :
                 if(--y>0&&++x<size+1)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     ++((*i).coord).first;
                     --((*i).coord).second;
                 }
@@ -126,14 +127,14 @@ void environment::day()
             case 3 :
                 if(++x<size+1)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     ++((*i).coord).first;
                 }
                 break ;
             case 4 :
                 if(++x<size+1&&++y<size+1)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     ++((*i).coord).first;
                     ++((*i).coord).second;
                 }
@@ -141,14 +142,14 @@ void environment::day()
             case 5:
                 if(++y<size+1)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     ++((*i).coord).second;
                 }
                 break;
             case 6 :
                 if(++y<size+1&&--x>0)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     --((*i).coord).first;
                     ++((*i).coord).second;
                 }
@@ -156,24 +157,24 @@ void environment::day()
             case 7 :
                 if(--x>0)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     --((*i).coord).first;
                 }
                 break;
-            case 8 :
+            case 0 :
                 if(--y>0&&--x>0)
                 {
-                    (*i).a1=a;
+                    (*i).a1=(a+4)%8;
                     --((*i).coord).first;
                     --((*i).coord).second;
                 }
                 break;
             }
-            if(a==(*i).a1)
+            if((a+4)%8==(*i).a1)
                 break;
             }
             }
-            //cout << t;
+        cout << x << " " << y << " ";
         if(location[x][y]==1)
         {
             ++(*i).food ;
@@ -189,8 +190,8 @@ void environment::day()
         // }
         }
     }
-    for(list<species>::iterator i = skills.begin();i!=skills.end();i++)
-        cout << (*i).food << " " ;
+    //for(list<species>::iterator i = skills.begin();i!=skills.end();i++)
+        //cout << (*i).food << " " ;
 }
 
 int main()
